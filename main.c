@@ -36,6 +36,5 @@ int main() {
     cleanTree(tree);
     printf("Vazia: %d\n", isEmptyTree(tree));
     
-
     return 0;
 }

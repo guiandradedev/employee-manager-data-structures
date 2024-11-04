@@ -36,7 +36,9 @@ int main() {
     // cleanTree(tree);
     // printf("Vazia: %d\n", isEmptyTree(tree));
 
-    older(tree->root,NULL);
+    Root* older = findOlder(tree->root, tree->root);
+    printf("mais velho:\n\n");
+    printUser(&older->user);
     
     return 0;
 }

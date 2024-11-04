@@ -186,10 +186,24 @@ void cleanTree(Tree *tree){
     }
 }
 
-Root* older(Root* root_tree,User* older){
-    older = &root_tree->user;
-    printf("\n\nolder\n");
-    printUser(older);
+Root* findOlder(Root* root_tree, Root* older) {
+    if (root_tree == NULL) {
+        return older;
+    }
+
+    if (root_tree->user.age >= older->user.age) {
+        *older = *root_tree;
+    }
+
+    if (root_tree->root_left != NULL) {
+        findOlder(root_tree->root_left, older);
+    }
+    if (root_tree->root_right != NULL) {
+        findOlder(root_tree->root_right, older);
+    }
+
+    return older;
 }
+
 
 #endif // ROOT_H_INCLUDED

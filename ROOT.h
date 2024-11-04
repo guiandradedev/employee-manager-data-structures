@@ -164,7 +164,7 @@ User* removeFromTree(Tree *tree, int code) {
         return NULL;
     }
     tree->root = removeAux(tree->root, code);
-    return tree;
+    return &tree->root->user;
 }
 
 Root *cleanRoot(Root *root){
@@ -184,6 +184,12 @@ void cleanTree(Tree *tree){
         cleanRoot(tree->root);
         free(tree);
     }
+}
+
+Root* older(Root* root_tree,User* older){
+    older = &root_tree->user;
+    printf("\n\nolder\n");
+    printUser(older);
 }
 
 #endif // ROOT_H_INCLUDED

@@ -30,11 +30,13 @@ int main() {
     printf("Usuario 1240 removido\n");
 
     removeFromTree(tree, 1240);
-    printf("Buscaar 1240\n");
+    printf("Buscar 1240\n");
     printUser(searchTree(tree, 1240));
 
-    cleanTree(tree);
-    printf("Vazia: %d\n", isEmptyTree(tree));
+    // cleanTree(tree);
+    // printf("Vazia: %d\n", isEmptyTree(tree));
+
+    older(tree->root,NULL);
     
     return 0;
 }

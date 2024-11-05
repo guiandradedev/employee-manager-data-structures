@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "STRUCTS.h"
+#include <string.h>
+#include <ctype.h>
 
 Tree* createTree() {
     Tree* tree = (Tree*)malloc(sizeof(Tree));
@@ -223,6 +225,42 @@ User* findYounger(Root* root_tree, User* younger) {
     }
 
     return younger;
+}
+
+char* strupper(char* string){
+    char* result = malloc((strlen(string)+1)* sizeof(char));
+
+    if(result == NULL){
+        printf("Alocating error");
+        return NULL;
+    }
+
+        for (int i = 0; i < strlen(string); i++) {
+        result[i] = toupper(string[i]);
+    }
+    result[strlen(string)] = '\0';
+
+    return result;
+}
+
+void printRole(Root* root,char* role){
+    if(root == NULL){
+        printf("Arvore Vazia\n");
+        return;
+    }
+    if(root->root_right != NULL){
+        printRole(root->root_right,role);
+    }
+
+    if(strcmp(strupper(role),strupper(root->user.role)) == 0){
+        printUser(&root->user);
+        printf("---\n");
+    }
+        
+
+    if(root->root_left != NULL) {
+        printRole(root->root_left,role);
+    }
 }
 
 

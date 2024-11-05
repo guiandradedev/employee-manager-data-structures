@@ -22,27 +22,15 @@ int main() {
     insertTree(tree, (User){1238, "Luigi", 21, "GAROTO DE PROGRAMA", 100});
     insertTree(tree, (User){1242, "Robson5", 20, "GAROTO DE PROGRAMA", 1240});
 
-    // printf("Vazia: %d\n", isEmptyTree(tree));
+    printUser(searchTree(tree, 1240));
 
-    // printf("Pre: ");
-    // printPreOrder(tree->root);
-
-    // printf("Buscaar 1240\n");
-    // printUser(searchTree(tree, 1240));
-
-    // printf("Usuario 1240 removido\n");
-
-    // removeFromTree(tree, 1240);
-    // printf("Buscar 1240\n");
-    // printUser(searchTree(tree, 1240));
-
-    // cleanTree(tree);
-    // printf("Vazia: %d\n", isEmptyTree(tree));
 
     User* older = findOlder(tree->root, &tree->root->user);
 
     printf("mais velho:\n\n");
     printUser(older);
+
+    removeFromTree(tree, 1240);
 
     User* younger = findYounger(tree->root,&tree->root->user);
     

@@ -193,7 +193,7 @@ User* findOlder(Root* root_tree, User* older) {
     }
 
     if (root_tree->user.age >= older->age) {
-        *older = root_tree->user;
+        older = &root_tree->user;
     }
 
     if (root_tree->root_left != NULL) {
@@ -212,8 +212,7 @@ User* findYounger(Root* root_tree, User* younger) {
     }
 
     if (root_tree->user.age < younger->age) {
-        *younger = root_tree->user;
-
+        younger = &root_tree->user;
     }
 
     if (root_tree->root_right != NULL) {
@@ -248,19 +247,20 @@ void printRole(Root* root,char* role){
         printf("Arvore Vazia\n");
         return;
     }
-    if(root->root_right != NULL){
-        printRole(root->root_right,role);
-    }
 
     if(strcmp(strupper(role),strupper(root->user.role)) == 0){
         printUser(&root->user);
         printf("---\n");
     }
-        
+
+    if(root->root_right != NULL){
+        printRole(root->root_right,role);
+    }
 
     if(root->root_left != NULL) {
         printRole(root->root_left,role);
     }
+    
 }
 
 

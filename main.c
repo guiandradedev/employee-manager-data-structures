@@ -18,7 +18,7 @@ int main() {
     insertTree(tree, (User){1240, "Joao3", 1, "Eletricista", 1250});
     insertTree(tree, (User){1241, "Pedro4", 22, "GAROTO DE PROGRAMA", 1252});
     insertTree(tree, (User){1243, "Luigi6", 10, "GAROTO DE PROGRAMA", 100});
-    insertTree(tree, (User){1237, "Robson", 40, "GAROTO DE PROGRAMA", 1240});
+    insertTree(tree, (User){1237, "Robson", 40, "eletricista", 1240});
     insertTree(tree, (User){1238, "Luigi", 21, "GAROTO DE PROGRAMA", 100});
     insertTree(tree, (User){1242, "Robson5", 20, "GAROTO DE PROGRAMA", 1240});
 
@@ -48,9 +48,8 @@ int main() {
     
     printf("mais novo:\n\n");
     printUser(younger);
-
-
-
+    printf("\n\n");
+ 
     printRole(tree->root,"Eletricista");
 
     cleanTree(tree);

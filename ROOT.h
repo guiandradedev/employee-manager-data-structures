@@ -185,43 +185,42 @@ void cleanTree(Tree *tree){
         free(tree);
     }
 }
-
-Root* findOlder(Root* root_tree, Root* older) {
+User* findOlder(Root* root_tree, User* older) {
     if (root_tree == NULL) {
         return older;
     }
 
-    if (root_tree->user.age >= older->user.age) {
-        *older = *root_tree;
+    if (root_tree->user.age >= older->age) {
+        *older = root_tree->user;
     }
 
     if (root_tree->root_left != NULL) {
-        findOlder(root_tree->root_left, older);
+        older = findOlder(root_tree->root_left, older);
     }
     if (root_tree->root_right != NULL) {
-        findOlder(root_tree->root_right, older);
+        older = findOlder(root_tree->root_right, older);
     }
 
     return older;
 }
 
-Root* findYounger(Root* root_tree, Root* younger) {
+User* findYounger(Root* root_tree, User* younger) {
     if (root_tree == NULL) {
         return younger;
     }
 
-    if (root_tree->user.age <= younger->user.age) {
-        *younger = *root_tree;
-    }
+    if (root_tree->user.age < younger->age) {
+        *younger = root_tree->user;
 
-    if (root_tree->root_left != NULL) {
-        findYounger(root_tree->root_left, younger);
     }
 
     if (root_tree->root_right != NULL) {
-        findYounger(root_tree->root_right, younger);
+        younger = findYounger(root_tree->root_right, younger);
     }
 
+    if (root_tree->root_left != NULL) {
+        younger = findYounger(root_tree->root_left, younger);
+    }
 
     return younger;
 }

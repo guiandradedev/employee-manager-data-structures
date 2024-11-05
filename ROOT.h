@@ -205,5 +205,27 @@ Root* findOlder(Root* root_tree, Root* older) {
     return older;
 }
 
+Root* findYounger(Root* root_tree, Root* younger) {
+    if (root_tree == NULL) {
+        return younger;
+    }
+
+    if (root_tree->user.age <= younger->user.age) {
+        *younger = *root_tree;
+    }
+
+    if (root_tree->root_left != NULL) {
+        findYounger(root_tree->root_left, younger);
+    }
+
+    if (root_tree->root_right != NULL) {
+        findYounger(root_tree->root_right, younger);
+    }
+
+
+    return younger;
+}
+
+
 
 #endif // ROOT_H_INCLUDED

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "STRUCTS.h"
+#include <string.h>
+#include <ctype.h>
 
 Tree* createTree() {
     Tree* tree = (Tree*)malloc(sizeof(Tree));
@@ -94,24 +96,6 @@ void printInOrder(Root *root) {
     }
 }
 
-User* searchTree(Tree *tree, int code) {
-    if (tree == NULL || tree->root == NULL) {
-        return NULL;
-    }
-
-    Root* current = tree->root;
-    while (current != NULL) {
-        if (code > current->user.code) {
-            current = current->root_right;
-        } else if (code < current->user.code) {
-            current = current->root_left;
-        } else {
-            return &current->user;
-        }
-    }
-    return NULL;
-}
-
 Root* removeAux(Root* root, int code) {
     if(root == NULL) {
         printf("Usuario nao encontrado\n");
@@ -164,7 +148,7 @@ User* removeFromTree(Tree *tree, int code) {
         return NULL;
     }
     tree->root = removeAux(tree->root, code);
-    return tree;
+    return &tree->root->user;
 }
 
 Root *cleanRoot(Root *root){
@@ -185,5 +169,7 @@ void cleanTree(Tree *tree){
         free(tree);
     }
 }
+
+
 
 #endif // ROOT_H_INCLUDED

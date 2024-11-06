@@ -66,7 +66,7 @@ char* strupper(char* string){
         return NULL;
     }
 
-        for (int i = 0; i < strlen(string); i++) {
+    for (int i = 0; i < strlen(string); i++) {
         result[i] = toupper(string[i]);
     }
     result[strlen(string)] = '\0';
@@ -74,25 +74,27 @@ char* strupper(char* string){
     return result;
 }
 
-void printRole(Root* root,char* role){
+int printRole(Root* root,char* role){
+    int sum = 0;
     if(root == NULL){
         printf("Arvore Vazia\n");
-        return;
+        return 0;
     }
 
     if(strcmp(strupper(role),strupper(root->user.role)) == 0){
         printUser(&root->user);
         printf("---\n");
+        sum++;
     }
 
     if(root->root_right != NULL){
-        printRole(root->root_right,role);
+        sum += printRole(root->root_right,role);
     }
 
     if(root->root_left != NULL) {
-        printRole(root->root_left,role);
+        sum += printRole(root->root_left,role);
     }
-    
+    return sum;
 }
 
 void mensagem_erro(char* mensagem) {

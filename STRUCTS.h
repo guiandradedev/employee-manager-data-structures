@@ -4,9 +4,9 @@
 // Structs
 typedef struct user {
     int code;
-    char name[81];
+    char name[41];
     int age;
-    char role[31];
+    char role[26];
     float salary;
 } User;
 

@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
+#include <locale.h>
 #include "STRUCTS.h"
 #include "ROOT.h"
 #include "PROTOTIPOS.h"
@@ -15,17 +16,20 @@
 void header();
 void menu();
 int readFile(Tree* tree); // ok
+int newFile(Tree* tree, int N); // ok
 void findUser(Tree* tree); // ok
 User* findUserByCode(Tree* tree); // ok
 void findOlderAndYounger(Tree* tree); // ok
 void findUserByRole(Tree* tree); // ok
 void printAllUsers(Tree *tree); // ok
 
-void insertUser(Tree *tree); // not ok
-void removeUser(Tree *tree); // ok
+void insertUser(Tree *tree, int *N); // not ok
+void removeUser(Tree *tree, int *N); // ok
 void updateUser(Tree *tree); // not ok
 
 int main() {
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+
     Tree* tree = createTree();
     int N = 0;
     N = readFile(tree);
@@ -45,7 +49,7 @@ int main() {
             break;
         case 3:
             // remover um funcionario
-            removeUser(tree);
+            removeUser(tree, &N);
             break;
         case 4:
             // buscar um funcionario pelo codigo
@@ -73,6 +77,8 @@ int main() {
     }while (op != 8);
 
     mensagem_sucesso("Obrigado por acessar o sistema.");
+
+    newFile(tree, N);
 
     cleanTree(tree);
 
@@ -104,10 +110,29 @@ int readFile(Tree* tree){
         fflush(stdin);
         if (fgets(line, sizeof(line), ARQ) != NULL) {
             // Le até encontrar um número
-            sscanf(line, "%d,%[^,],%d,%[^,],%f;", &aux.code, aux.name, &aux.age, aux.role, &aux.salary);
+            fscanf(ARQ, "%d %40[^0-9] %d %49[^0-9] %f", &aux.code, aux.name, &aux.age, aux.role, &aux.salary);
+
+            trimTrailingSpaces(aux.name);
+            trimTrailingSpaces(aux.role);
             insertTree(tree, aux);
         }
     }
+
+    fclose(ARQ);
+    return N;
+}
+int newFile(Tree* tree, int N){
+    FILE *ARQ;
+    ARQ = fopen("../Dados2.txt", "w");
+    if(ARQ == NULL) {
+        header();
+        printf("Erro na abertura do arquivo, programa encerrando.\n");
+        system("pause");
+        exit(0);
+    }
+    fprintf(ARQ,"%d\n",N);
+
+    insertUserInFile(tree->root, ARQ);
 
     fclose(ARQ);
     return N;
@@ -202,12 +227,12 @@ void printAllUsers(Tree *tree) {
     fimFuncao();
 }
 
-void insertUser(Tree *tree) {
+void insertUser(Tree *tree, int *N) {
     header();
     printf("Inserir um usuario na arvore\n");
     fimFuncao();
 }
-void removeUser(Tree *tree) {
+void removeUser(Tree *tree, int *N) {
     header();
     printf("Remover um usuario da arvore\n");
     
@@ -235,6 +260,8 @@ void removeUser(Tree *tree) {
         removeFromTree(tree, user->code);
         mensagem_sucesso("Usuario removido com sucesso!");
     }
+
+    (*N)--;
 
     fimFuncao();
 }

@@ -130,4 +130,50 @@ bool emptyTreeMessage(Tree *tree) {
     return false;
 }
 
+void trimTrailingSpaces(char *str) {
+    int length = strlen(str);
+    while (length > 0 && isspace((unsigned char)str[length - 1])) {
+        str[length - 1] = '\0';
+        length--;
+    }
+}
+
+void padWithSpaces(char *str, int length) {
+    int currentLength = strlen(str);
+    while (currentLength < length) {
+        str[currentLength] = ' ';
+        currentLength++;
+    }
+    str[currentLength] = '\0';
+}
+
+char* formatRow(User* user) {
+    static char row[200];
+
+    padWithSpaces(user->name, 38);
+    padWithSpaces(user->role, 23);
+    // 3 a menos que o valor original
+    // pq? nao sei
+
+    snprintf(row, sizeof(row), "%d %s %d %s %.2f",
+             user->code, user->name, user->age, user->role, user->salary);
+
+    return row;
+}
+
+void insertUserInFile(Root* root, FILE *ARQ) {
+    if(root == NULL){
+        printf("Arvore Vazia\n");
+        return;
+    }
+    fprintf(ARQ,"%s\n",formatRow(&root->user));//Grava os elementos do vetor
+    if(root->root_right != NULL){
+        insertUserInFile(root->root_right, ARQ);
+    }
+    if(root->root_left != NULL) {
+        insertUserInFile(root->root_left, ARQ);
+    }
+}
+
+
 #endif // ROOT_H_INCLUDED

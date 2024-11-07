@@ -17,7 +17,6 @@
 5501 Rafael Moreira                         52 ANALISTA DE SUPORTE     2358,88
 5373 Carlos Ferreira                        42 ADMINISTRATIVO          4004,48
 5274 Gabriel Carvalho                       34 CONTADOR                5604,70
-1922 William Pereira                        25 ANALISTA DE SUPORTE     2574,51
 4030 Gabriel Oliveira                       47 CONTADOR                5582,50
 4347 Bruno Teixeira                         30 ANALISTA DE SISTEMAS    5888,26
 4667 Lucas Barros                           64 PROGRAMADOR             3229,49
@@ -26,5 +25,6 @@
 3266 Thiago Gomes                           61 ADMINISTRATIVO          2599,98
 3445 Gabriel Gomes                          25 ANALISTA DE SISTEMAS    5372,44
 3061 Carlos Ferreira                        29 ADMINISTRATIVO          4188,45
+1950 Thiago Ribeiro                         64 ANALISTA DE SUPORTE     2348,95
 2136 Helena Moreira                         32 PROGRAMADOR             3375,04
 2014 Daniel Pereira                         63 ANALISTA DE SUPORTE     2392,21

@@ -91,6 +91,20 @@ void header() {
     printf("-------\n");
 }
 
+void getLine(int *index,char* line_file, char* user){
+    int j=0;
+    bool space_count = false;
+    while (line_file[*index] != '\0' && !space_count){
+        if (line_file[*index] == ' ' && line_file[*index+1] == ' ') {
+            space_count = true;
+        } else {
+            user[j++] = line_file[*index];
+        }
+        (*index)++;
+    }
+    user[j] = '\0';
+}
+
 int readFile(Tree* tree){
     FILE *ARQ;
     int N=0;
@@ -101,7 +115,7 @@ int readFile(Tree* tree){
         system("pause");
         exit(0);
     }
-    fscanf(ARQ, "%d", &N);
+    fscanf(ARQ, "%d\n", &N);
     // printf("Quantidade de usuarios a serem cadastrados: %d\n", N);
 
     User aux;
@@ -110,10 +124,34 @@ int readFile(Tree* tree){
         fflush(stdin);
         if (fgets(line, sizeof(line), ARQ) != NULL) {
             // Le até encontrar um número
-            fscanf(ARQ, "%d %40[^0-9] %d %49[^0-9] %f", &aux.code, aux.name, &aux.age, aux.role, &aux.salary);
+            line[strcspn(line, "\n")] = '\0';
 
-            trimTrailingSpaces(aux.name);
-            trimTrailingSpaces(aux.role);
+            sscanf(line, "%d", &aux.code);
+
+            int index = 0;
+            
+            while(line[index] != ' ') index++;
+            index++;
+
+            getLine(&index, line, aux.name);
+
+            while (line[index] == ' '){
+                index++;
+            }   
+
+            sscanf(&line[index],"%d", &aux.age);
+
+            while(line[index] != ' ') index++;
+            index++;
+
+            getLine(&index, line, aux.role);
+
+            while (line[index] == ' '){
+                index++;
+            } 
+            sscanf(&line[index], "%lf\n", &aux.salary);
+            // le como longfloat pra evitar bug da leitura da virgula
+
             insertTree(tree, aux);
         }
     }
@@ -230,6 +268,10 @@ void printAllUsers(Tree *tree) {
 void insertUser(Tree *tree, int *N) {
     header();
     printf("Inserir um usuario na arvore\n");
+
+    printf("Insira o nome\n");
+    printf("Insira a idade\n");
+    printf("\n");
     fimFuncao();
 }
 void removeUser(Tree *tree, int *N) {

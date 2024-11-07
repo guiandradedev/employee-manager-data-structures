@@ -7,7 +7,7 @@ typedef struct user {
     char name[41];
     int age;
     char role[26];
-    float salary;
+    double salary;
 } User;
 
 typedef struct node {

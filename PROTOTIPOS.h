@@ -15,5 +15,8 @@ void trimTrailingSpaces(char *str);
 void padWithSpaces(char *str, int length);
 void insertUserInFile(Root* root, FILE *ARQ);
 char* formatRow(User* user);
+void clear();
+char* setRole();
+void createUser(Tree *tree, int *N);
 
 #endif // STRUCTS_H_INCLUDED

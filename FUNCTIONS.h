@@ -116,10 +116,11 @@ void mensagem_amarela(char* mensagem){
 }
 
 void fimFuncao() {
-    fflush(stdin);
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
     printf("Pressione Enter para continuar...\n");
     getchar();
-    system("cls");
+    clear();
 }
 
 bool emptyTreeMessage(Tree *tree) {
@@ -173,6 +174,14 @@ void insertUserInFile(Root* root, FILE *ARQ) {
     if(root->root_left != NULL) {
         insertUserInFile(root->root_left, ARQ);
     }
+}
+
+void clear() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
 
 

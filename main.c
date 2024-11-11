@@ -46,7 +46,7 @@ int main() {
             insertUser(tree,&N);
             break;
         case 2:
-            // atualizar um funcionario
+            updateUser(tree);
             break;
         case 3:
             // remover um funcionario
@@ -311,7 +311,7 @@ char* setRole(){
             break;
 
         default:
-            printf("opcao invalida\n");
+            mensagem_erro("Opcao invalida!\n");
             break;
         }
     } while (op<1 || op>6);
@@ -373,6 +373,34 @@ void removeUser(Tree *tree, int *N) {
 
     fimFuncao();
 }
+
+void updateName(User* user){
+    printf("Insira o novo nome de no maximo 40 caracteres: ");
+    scanf(" %[^\n]s", user->name);
+    mensagem_sucesso("Nome atualizado!");
+}
+
+void updateAge(User* user){
+    printf("Insira a nova idade: ");
+    scanf("%d", &user->age);
+    mensagem_sucesso("Idade atualizada!");
+}
+
+void updateRole(User* user){
+    printf("Diga qual a nova profissao:\n");
+    strcpy(user->role,setRole());
+    mensagem_sucesso("Profissao atualizada!");
+}
+
+void updateSalary(User* user){
+    printf("Insira o novo salario: ");
+    do
+    {
+        scanf("%lf", &user->salary);
+    } while (user->salary < 0);
+    mensagem_sucesso("Salario atualizado!");   
+}
+
 void updateUser(Tree *tree) {
     header();
     printf("Atualizar um usuario da arvore\n");
@@ -381,5 +409,54 @@ void updateUser(Tree *tree) {
     printf("\n");
 
     User* user = findUserByCode(tree);
-    fimFuncao();
+
+    if(user == NULL){
+        mensagem_erro("usuario nao encontrado");
+        fimFuncao();
+        return;
+    }
+
+    int op;
+    do
+    {
+        header();
+        printUser(user);
+        printf("-----------------------\n");
+        printf("O que deseja atualizar?\n");
+        printf("[1]-Nome\n");
+        printf("[2]-Idade\n");
+        printf("[3]-Profissao\n");
+        printf("[4]-Salario\n");
+        printf("[5]-Nao desejo atualizar mais\n");
+        printf("opcao:");
+        scanf("%d",&op);
+    
+        switch (op){
+        case 1:
+            updateName(user);
+            break;
+
+        case 2:
+            updateAge(user);
+            break;
+
+        case 3:
+            updateRole(user);
+            break;
+
+        case 4:
+            updateSalary(user);
+            break;
+
+        case 5:
+            fimFuncao();
+            return;
+            break;
+        
+        default:
+            mensagem_erro("Opcao invalida");
+            break;
+        }
+
+    } while (op != 5);
 }

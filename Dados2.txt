@@ -1,4 +1,4 @@
-31
+30
 5919 William Nascimento                     49 ANALISTA DE SUPORTE     2461,43
 7248 Vanessa Mendes                         45 CONTADOR                5048,10
 8011 Ana Rodrigues                          61 ANALISTA DE SUPORTE     2618,11
@@ -29,4 +29,3 @@
 1950 Thiago Ribeiro                         64 ANALISTA DE SUPORTE     2348,95
 2136 Helena Moreira                         32 PROGRAMADOR             3375,04
 2014 Daniel Pereira                         63 ANALISTA DE SUPORTE     2392,21
-1000 Luigi                                  21 ANALISTA DE SISTEMAS    90,00

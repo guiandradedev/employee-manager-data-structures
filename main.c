@@ -38,6 +38,7 @@ int main() {
     do{
         op=0;
         menu();
+        printf("valor de N:%d\n",N);
         scanf("%d",&op);
 
         switch (op){
@@ -153,7 +154,7 @@ int readFile(Tree* tree){
             sscanf(&line[index], "%lf\n", &aux.salary);
             // le como longfloat pra evitar bug da leitura da virgula
 
-            insertTree(tree, aux);
+            insertTree(tree, aux,&N);
         }
     }
 
@@ -162,7 +163,7 @@ int readFile(Tree* tree){
 }
 int newFile(Tree* tree, int N){
     FILE *ARQ;
-    ARQ = fopen("../Dados2.txt", "w");
+    ARQ = fopen("Dados2.txt", "w");
     if(ARQ == NULL) {
         header();
         printf("Erro na abertura do arquivo, programa encerrando.\n");
@@ -331,7 +332,9 @@ void insertUser(Tree *tree, int *N){
     printf("Insira o cargo\n");
     strcpy(aux.role, setRole());
 
-    insertTree(tree,aux);
+    (*N)++;
+
+    insertTree(tree,aux,N);
 
     printf("\n");
     fimFuncao();

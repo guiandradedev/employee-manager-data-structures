@@ -12,6 +12,7 @@
 
 // Para evitar problemas de compilador devido ao path
 #define DATA_PATH "Dados.txt"
+#define DATA2_PATH "Dados2.txt"
 
 void header();
 void menu();
@@ -38,7 +39,6 @@ int main() {
     do{
         op=0;
         menu();
-        printf("valor de N:%d\n",N);
         scanf("%d",&op);
 
         switch (op){
@@ -123,7 +123,7 @@ int readFile(Tree* tree){
     User aux;
     char line[200];
     for (int i = 0; i < N; i++) {
-        fflush(stdin);
+        flushStdin();
         if (fgets(line, sizeof(line), ARQ) != NULL) {
             // Le até encontrar um número
             line[strcspn(line, "\n")] = '\0';
@@ -163,7 +163,7 @@ int readFile(Tree* tree){
 }
 int newFile(Tree* tree, int N){
     FILE *ARQ;
-    ARQ = fopen("Dados2.txt", "w");
+    ARQ = fopen(DATA2_PATH, "w");
     if(ARQ == NULL) {
         header();
         printf("Erro na abertura do arquivo, programa encerrando.\n");
@@ -251,7 +251,7 @@ void findUserByRole(Tree* tree) {
     if(emptyTreeMessage(tree)) return;
     printf("\n");
 
-    fflush(stdin);
+    flushStdin();
     printf("Qual cargo deseja buscar?\n");
     role = setRole();
 

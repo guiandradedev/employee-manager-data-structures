@@ -115,9 +115,13 @@ void mensagem_amarela(char* mensagem){
     resetcor();
 }
 
-void fimFuncao() {
+void flushStdin(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
+void fimFuncao() {
+    flushStdin();
     printf("Pressione Enter para continuar...\n");
     getchar();
     clear();

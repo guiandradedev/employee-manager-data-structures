@@ -21,20 +21,23 @@ Root* createNode(User user) {
     return node;
 }
 
-Root* insertNode(Root *root, User user) {
+Root* insertNode(Root *root, User user,int *N) {
     if(root == NULL) {
         return createNode(user);
     }
     if(user.code < root->user.code) {
-        root->root_left = insertNode(root->root_left, user);
+        root->root_left = insertNode(root->root_left, user,N);
     } else if(user.code > root->user.code){
-        root->root_right = insertNode(root->root_right, user);
+        root->root_right = insertNode(root->root_right, user,N);
+    }else if (user.code == root->user.code){
+        (*N)--;
+        return root;
     }
     return root;
 }
 
-void insertTree(Tree *tree, User user) {
-    tree->root = insertNode(tree->root, user);
+void insertTree(Tree *tree, User user,int *N) {
+    tree->root = insertNode(tree->root, user,N);
 }
 
 int isEmptyTree(Tree* tree) {

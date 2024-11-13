@@ -4,10 +4,12 @@
 // Structs
 typedef struct user {
     int code;
-    char name[81];
+    char name[41];
     int age;
-    char role[31];
-    float salary;
+    char role[26];
+    double salary;
+    
+    int height; // altura da arvore
 } User;
 
 typedef struct node {

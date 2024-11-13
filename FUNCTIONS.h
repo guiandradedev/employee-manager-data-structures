@@ -115,11 +115,16 @@ void mensagem_amarela(char* mensagem){
     resetcor();
 }
 
+void flushStdin(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
 void fimFuncao() {
-    fflush(stdin);
+    flushStdin();
     printf("Pressione Enter para continuar...\n");
     getchar();
-    system("cls");
+    clear();
 }
 
 bool emptyTreeMessage(Tree *tree) {
@@ -129,5 +134,79 @@ bool emptyTreeMessage(Tree *tree) {
     }
     return false;
 }
+
+void trimTrailingSpaces(char *str) {
+    int length = strlen(str);
+    while (length > 0 && isspace((unsigned char)str[length - 1])) {
+        str[length - 1] = '\0';
+        length--;
+    }
+}
+
+void padWithSpaces(char *str, int length) {
+    int currentLength = strlen(str);
+    while (currentLength < length) {
+        str[currentLength] = ' ';
+        currentLength++;
+    }
+    str[currentLength] = '\0';
+}
+
+char* formatRow(User* user) {
+    static char row[200];
+
+    padWithSpaces(user->name, 38);
+    padWithSpaces(user->role, 23);
+    // 3 a menos que o valor original
+    // pq? nao sei
+
+    snprintf(row, sizeof(row), "%d %s %d %s %.2f",
+             user->code, user->name, user->age, user->role, user->salary);
+
+    return row;
+}
+
+void insertUserInFile(Root* root, FILE *ARQ) {
+    if(root == NULL){
+        printf("Arvore Vazia\n");
+        return;
+    }
+    fprintf(ARQ,"%s\n",formatRow(&root->user));//Grava os elementos do vetor
+    if(root->root_right != NULL){
+        insertUserInFile(root->root_right, ARQ);
+    }
+    if(root->root_left != NULL) {
+        insertUserInFile(root->root_left, ARQ);
+    }
+}
+
+void clear() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+User* searchTreeByName(Root *root,char* name){
+    User* user = NULL;
+    if (root == NULL){
+        return NULL;
+    }
+    
+    if(strcmp(strupper(name),strupper(root->user.name)) == 0){
+        return &root->user;
+    }
+
+    if(root->root_right != NULL){
+        user = searchTreeByName(root->root_right, name);
+    }
+    if(root->root_left != NULL){
+        user = searchTreeByName(root->root_left, name);
+    }
+
+    return user;
+}
+
 
 #endif // ROOT_H_INCLUDED

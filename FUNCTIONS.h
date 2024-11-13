@@ -59,17 +59,19 @@ User* findYounger(Root* root_tree, User* younger) {
 }
 
 char* strupper(char* string){
-    char* result = malloc((strlen(string)+1)* sizeof(char));
+    int lenght = strlen(string);
+    char* result = malloc((lenght+1)* sizeof(char));
 
     if(result == NULL){
         printf("Alocating error");
         return NULL;
     }
+    
 
-    for (int i = 0; i < strlen(string); i++) {
+    for (int i = 0; i < lenght; i++) {
         result[i] = toupper(string[i]);
     }
-    result[strlen(string)] = '\0';
+    result[lenght] = '\0';
 
     return result;
 }

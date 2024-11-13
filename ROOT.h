@@ -145,7 +145,7 @@ Root* removeAux(Root* root, int code) {
 
 User* removeFromTree(Tree *tree, int code) {
     Root*aux = tree->root;
-    if(aux->user.code == code && aux->root_left == NULL & aux->root_right == NULL) {
+    if((aux->user.code == code) && (aux->root_left == NULL) && (aux->root_right == NULL)) {
         free(aux);
         free(tree);
         return NULL;

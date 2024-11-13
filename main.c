@@ -11,8 +11,8 @@
 #include "FUNCTIONS.h"
 
 // Para evitar problemas de compilador devido ao path
-#define DATA_PATH "Dados.txt"
-#define DATA2_PATH "Dados2.txt"
+#define DATA_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados.txt"
+#define DATA2_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados2.txt"
 
 void header();
 void menu();
@@ -221,7 +221,7 @@ void findUser(Tree* tree) {
 }
 
 User* findUserByName(Tree* tree){
-    char* name;
+    char* name = NULL;
     do
     {
         printf("Diga o nome do funcionario(maximo de 40 caracteres): ");
@@ -341,6 +341,8 @@ char* setRole(){
             break;
         }
     } while (op<1 || op>6);
+
+    return NULL;
 }    
 
 void insertUser(Tree *tree, int *N){

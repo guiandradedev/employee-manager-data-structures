@@ -11,8 +11,8 @@
 #include "FUNCTIONS.h"
 
 // Para evitar problemas de compilador devido ao path
-#define DATA_PATH "Dados.txt"
-#define DATA2_PATH "Dados2.txt"
+#define DATA_PATH "../Dados.txt"
+#define DATA2_PATH "../Dados2.txt"
 
 void header();
 void menu();
@@ -378,6 +378,7 @@ void removeUser(Tree *tree, int *N) {
 
     if(user == NULL) {
         mensagem_erro("Usuario nao encontrado!");
+        fimFuncao();
         return;
     }
     mensagem_sucesso("Usuario encontrado!");

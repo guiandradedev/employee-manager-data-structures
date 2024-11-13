@@ -8,6 +8,8 @@ typedef struct user {
     int age;
     char role[26];
     double salary;
+    
+    int height; // altura da arvore
 } User;
 
 typedef struct node {

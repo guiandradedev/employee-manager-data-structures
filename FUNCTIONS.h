@@ -188,5 +188,25 @@ void clear() {
     #endif
 }
 
+User* searchTreeByName(Root *root,char* name){
+    User* user = NULL;
+    if (root == NULL){
+        return NULL;
+    }
+    
+    if(strcmp(strupper(name),strupper(root->user.name)) == 0){
+        return &root->user;
+    }
+
+    if(root->root_right != NULL){
+        user = searchTreeByName(root->root_right, name);
+    }
+    if(root->root_left != NULL){
+        user = searchTreeByName(root->root_left, name);
+    }
+
+    return user;
+}
+
 
 #endif // ROOT_H_INCLUDED

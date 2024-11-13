@@ -17,6 +17,6 @@ void insertUserInFile(Root* root, FILE *ARQ);
 char* formatRow(User* user);
 void clear();
 char* setRole();
-void createUser(Tree *tree, int *N);
+User* findUserByName(Tree* tree);
 
 #endif // STRUCTS_H_INCLUDED

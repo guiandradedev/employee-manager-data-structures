@@ -53,7 +53,7 @@ int main() {
             removeUser(tree, &N);
             break;
         case 4:
-            // buscar um funcionario pelo codigo
+            // buscar um funcionario pelo matricula
             findUser(tree);
             break;
         case 5:
@@ -69,7 +69,7 @@ int main() {
             printAllUsers(tree);
             break;
         case 8:
-            // fim do codigo
+            // fim do matricula
             break;
         default:
             mensagem_erro("Comando incorreto.");
@@ -123,7 +123,7 @@ int readFile(Tree* tree){
     User aux;
     char line[200];
     for (int i = 0; i < N; i++) {
-        flushStdin();
+        // flushStdin();
         if (fgets(line, sizeof(line), ARQ) != NULL) {
             // Le até encontrar um número
             line[strcspn(line, "\n")] = '\0';
@@ -182,16 +182,31 @@ void menu() {
     header();
     printf("O que deseja fazer?\n");
     printf("[1] - Inserir funcionario           [5] - Buscar mais novo e mais velho\n");
-    printf("[2] - Atualizar funcionario         [6] - Buscar pelo cargo\n");
+    printf("[2] - Atualizar funcionario         [6] - Imprimir de acordo com o cargo\n");
     printf("[3] - Remover funcionario           [7] - Imprimir todos\n");
-    printf("[4] - Buscar pelo codigo            [8] - Sair do sistema\n");
+    printf("[4] - Buscar funcionario            [8] - Sair do sistema\n");
     printf("\nOpcao: ");
 }
 
 void findUser(Tree* tree) {
     header();
+    int op;
+    User* user;
 
-    User* user = findUserByCode(tree);
+    do
+    {
+        printf("Como deseja realizaar a busca?\n");
+        printf("[1] - Pela matricula do funcionario\n");
+        printf("[2] - Pelo nome do funcionario\n");
+        scanf("%d",&op);
+    } while (op < 1 || op > 2);
+    
+    if(op == 1){
+        user = findUserByCode(tree);
+    }else{
+        user = findUserByName(tree);
+    }
+
     printf("Situacao da busca: ");
     if(user == NULL) {
         mensagem_erro("Usuario nao encontrado!");
@@ -205,12 +220,23 @@ void findUser(Tree* tree) {
     fimFuncao();
 }
 
+User* findUserByName(Tree* tree){
+    char* name;
+    do
+    {
+        printf("Diga o nome do funcionario(maximo de 40 caracteres): ");
+        scanf(" %[^\n]s",name);
+    } while (strlen(name) > 40);
+    
+    return searchTreeByName(tree->root,name);
+}
+
 int insertCode(){
     int code;
     do {
         scanf("%d", &code);
         if(code < 1000 || code > 9999) {
-            mensagem_erro("Insira um codigo entre 1000 e 9999!");
+            mensagem_erro("Insira uma matricula entre 1000 e 9999!");
         }
     } while(code < 1000 || code > 9999);
 
@@ -218,7 +244,7 @@ int insertCode(){
 }
 
 User* findUserByCode(Tree* tree) {
-    printf("Insira o codigo que deseja buscar:\n");
+    printf("Insira a matricula que deseja buscar:\n");
 
     return searchTree(tree, insertCode());
 }

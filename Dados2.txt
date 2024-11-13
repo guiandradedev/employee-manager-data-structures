@@ -1,5 +1,5 @@
 30
-5501 Rafael Moreira                         52 ANALISTA DE SUPORTE     2358,88
+5919 William Nascimento                     49 ANALISTA DE SUPORTE     2461,43
 7248 Vanessa Mendes                         45 CONTADOR                5048,10
 8011 Ana Rodrigues                          61 ANALISTA DE SUPORTE     2618,11
 8417 Bruno Carvalho                         31 ADMINISTRATIVO          3787,99
@@ -14,6 +14,7 @@
 4741 Igor Barros                            64 ANALISTA DE SISTEMAS    5623,70
 4811 Carlos Barros                          36 CONTADOR                5420,11
 5382 Mariana Mendes                         36 PROGRAMADOR             3811,70
+5501 Rafael Moreira                         52 ANALISTA DE SUPORTE     2358,88
 5373 Carlos Ferreira                        42 ADMINISTRATIVO          4004,48
 5274 Gabriel Carvalho                       34 CONTADOR                5604,70
 1922 William Pereira                        25 ANALISTA DE SUPORTE     2574,51
@@ -28,4 +29,3 @@
 1950 Thiago Ribeiro                         64 ANALISTA DE SUPORTE     2348,95
 2136 Helena Moreira                         32 PROGRAMADOR             3375,04
 2014 Daniel Pereira                         63 ANALISTA DE SUPORTE     2392,21
-1000 Luis                                   20 PROGRAMADOR             8999,99

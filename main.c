@@ -11,8 +11,12 @@
 #include "FUNCTIONS.h"
 
 // Para evitar problemas de compilador devido ao path
-#define DATA_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados.txt"
-#define DATA2_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados2.txt"
+// #define DATA_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados.txt"
+#define DATA_PATH "C:/employee-manager-data-structures/Dados.txt"
+
+// #define DATA2_PATH "C:/Users/lugaz/OneDrive/GitHub/employee-manager-data-structures/Dados2.txt"
+#define DATA2_PATH "C:/employee-manager-data-structures/Dados2.txt"
+
 
 void header();
 void menu();

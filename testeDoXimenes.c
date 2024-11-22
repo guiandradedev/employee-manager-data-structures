@@ -14,8 +14,8 @@
 typedef struct no {
     int info;
     int fb;
-    struct node* noEsq;
-    struct node* noDir;
+    struct no* noEsq;
+    struct no* noDir;
 } NoArv;
 
 typedef struct Arv {
@@ -34,6 +34,11 @@ NoArv* criarNo(int v);
 int main(){
     Arv* arvore = criarArvore();
     inserirArvBalanceado(arvore,9);
+    inserirArvBalanceado(arvore,10);
+    inserirArvBalanceado(arvore,18);
+    inserirArvBalanceado(arvore,2);
+    inserirArvBalanceado(arvore,4);
+
     printPosOrderX(arvore->raiz);
 }
 
@@ -75,10 +80,10 @@ void printPosOrderX(NoArv *raiz) {
         return;
     }
     if(raiz->noDir != NULL) {
-        printPosOrder(raiz->noDir);
+        printPosOrderX(raiz->noDir);
     }
     if(raiz->noEsq != NULL){
-        printPosOrder(raiz->noEsq);
+        printPosOrderX(raiz->noEsq);
     }
     printf("%d |",raiz->info);
 }

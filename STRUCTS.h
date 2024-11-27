@@ -14,6 +14,7 @@ typedef struct node {
     User user;
     struct node* root_left;
     struct node* root_right;
+    int bf;
 } Root;
 
 typedef struct tree {

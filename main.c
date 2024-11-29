@@ -32,6 +32,28 @@ void insertUser(Tree *tree, int *N); // ok
 void removeUser(Tree *tree, int *N); // ok
 void updateUser(Tree *tree); // not ok
 
+void imprimirArvore(Root* raiz, int espaco, int nivel) {
+    if (raiz == NULL) return;
+
+    espaco += 4; // Define o espaçamento entre os níveis.
+
+    // Primeiro, imprime o subárvore direita.
+    imprimirArvore(raiz->root_right, espaco, nivel + 1);
+
+    // Imprime o nó atual com o espaçamento correspondente.
+    printf("\n");
+    for (int i = 4; i < espaco; i++) printf(" ");
+    printf("%d\n", raiz->user.code);
+
+    // Por último, imprime o subárvore esquerda.
+    imprimirArvore(raiz->root_left, espaco, nivel + 1);
+}
+
+// Wrapper para a função imprimirArvore.
+void imprimirArvoreASCII(Root* raiz) {
+    imprimirArvore(raiz, 0, 0);
+}
+
 int main() {
     setlocale(LC_ALL, "pt_BR.UTF-8");
 
@@ -39,6 +61,8 @@ int main() {
     int N = 0;
     N = readFile(tree);
     int op;
+
+    // imprimirArvoreASCII(tree->root);
 
     do{
         op=0;

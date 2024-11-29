@@ -5,10 +5,10 @@
 #include <stdbool.h>
 #include <locale.h>
 // #include "STRUCTS.h"
-#include "ROOT.h"
-#include "PROTOTIPOS.h"
+// #include "ROOT.h"
+// #include "PROTOTIPOS.h"
 #include "colors.h"
-#include "FUNCTIONS.h"
+// #include "FUNCTIONS.h"
 
 // Structs
 typedef struct no {
@@ -24,6 +24,7 @@ typedef struct Arv {
 
 NoArv* inserirNo(NoArv* raiz, int valor, int*alterou);
 void inserirArvBalanceado(Arv* arvore,int valor);
+void removeFromTree(Arv* tree,int info);
 void printPosOrderX(NoArv *raiz);
 Arv* criarArvore();
 NoArv* criarNo(int v);
@@ -64,6 +65,7 @@ int main(){
     inserirArvBalanceado(arvore, 7);
     inserirArvBalanceado(arvore, 5);
     inserirArvBalanceado(arvore, 8);
+
     printPosOrderX(arvore->raiz);
     imprimirArvoreASCII(arvore->raiz);
     // imprimirArvoreASCII(arvore->raiz);
@@ -74,6 +76,8 @@ int main(){
     // inserirArvBalanceado(arvore,1);
 
     printf("\n\n");
+
+    removeFromTree(arvore, 8);
 
     printPosOrderX(arvore->raiz);
     imprimirArvoreASCII(arvore->raiz);
@@ -179,77 +183,75 @@ void inserirArvBalanceado(Arv* arvore,int valor){
     arvore->raiz = inserirNo(arvore->raiz, valor, &alterou);
 } 
 
-// NoArv* rotateRight(NoArv* y){
-//     NoArv* x = y->root_left;
-//     NoArv* t2 = x->root_right;
+NoArv* removeAux(NoArv* root, int info, int* alterou) {
+    if(root == NULL) {
+        printf("Usuario nao encontrado\n");
+    } else {
+        if(info > root->info) {
+            root->noDir = removeAux(root->noDir, info, alterou);
+            // direita
+            if (*alterou) {
+                root->bf--;
+            }
+        } else {
+            if(info < root->info) {
+                root->noEsq = removeAux(root->noEsq, info, alterou);
+                // esquerda
+                if (*alterou) {
+                    root->bf++;
+                }
+            } else {
+                // achou o no
+                *alterou = 1;
+                if(root->noDir == NULL && root->noEsq == NULL) {
+                    free(root); // no sem filhos
+                    root = NULL;
+                } else {
+                    if(root->noEsq == NULL) {
+                        // so um filho da direita
+                        NoArv* aux = root;
+                        root = root->noDir;
+                        free(aux);
+                    } else {
+                        if(root->noDir == NULL) {
+                            // so tem filho da esquerda
+                            NoArv* aux = root;
+                            root = root->noEsq;
+                            free(aux);
+                        } else {
+                            // tem os dois filhos
+                            NoArv* aux = root->noEsq;
+                            while(aux->noDir != NULL) {
+                                aux = aux->noDir;
+                            }
+                            root->info = aux->info; // troca as informacoes
+                            aux->info = info;
+                            root->noEsq = removeAux(root->noEsq, info,alterou);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    root = balancear(root);
 
-//     x->root_right = y;
-//     y->root_left = t2;
+    if (root->bf == 0) {
+        *alterou = 0;
+    }
 
-//     updateBalance(y);
-//     updateBalance(x);
-// }
+    return root;
+}
 
-
-
-// NoArv* rotateLeft(NoArv* root) {
-//     NoArv* newRoot = root->noDir;
-//     root->noDir = newRoot->noEsq; // Reatribui o filho esquerdo da nova raiz.
-//     newRoot->noEsq = root;       // Faz a antiga raiz virar o filho esquerdo da nova raiz.
-
-//     // Atualiza os fatores de balanceamento.
-//     root->bf = 0;
-//     newRoot->bf = 0;
-
-//     return newRoot;              // Retorna a nova raiz.
-// }
-// NoArv* rotateRight(NoArv* root) {
-//     NoArv* newRoot = root->noEsq;
-//     root->noEsq = newRoot->noDir; // Reatribui o filho direito da nova raiz.
-//     newRoot->noDir = root;       // Faz a antiga raiz virar o filho direito da nova raiz.
-
-//     // Atualiza os fatores de balanceamento.
-//     root->bf = 0;
-//     newRoot->bf = 0;
-
-//     return newRoot;              // Retorna a nova raiz.
-// }
-
-
-// NoArv* inserirNo(NoArv* noRaiz, int valor) {
-//     if (noRaiz == NULL)
-//         return criarNo(valor); // Cria um novo nó se a raiz for NULL.
-
-//     if (valor < noRaiz->info) {
-//         // Inserir à esquerda.
-//         noRaiz->noEsq = inserirNo(noRaiz->noEsq, valor);
-
-//         // Balanceamento da subárvore esquerda.
-//         if (noRaiz->bf == 1) {
-//             noRaiz->bf = 0;
-//         } else if (noRaiz->bf == 0) {
-//             noRaiz->bf = -1;
-//         } else if (noRaiz->bf == -1) {
-//             // Rotação à esquerda, pois o fator ficou desbalanceado.
-//             noRaiz = rotateRight(noRaiz);
-//         }
-//     } else if (valor > noRaiz->info) {
-//         // Inserir à direita.
-//         noRaiz->noDir = inserirNo(noRaiz->noDir, valor);
-
-//         // Balanceamento da subárvore direita.
-//         if (noRaiz->bf == -1) {
-//             noRaiz->bf = 0;
-//         } else if (noRaiz->bf == 0) {
-//             noRaiz->bf = 1;
-//         } else if (noRaiz->bf == 1) {
-//             noRaiz = rotateLeft(noRaiz);
-//         }
-//     }
-
-//     return noRaiz; // Retorna a raiz atualizada.
-// }
-
+void removeFromTree(Arv *tree, int info) {
+    NoArv*aux = tree->raiz;
+    if((aux->info == info) && (aux->noEsq == NULL) && (aux->noDir == NULL)) {
+        free(aux);
+        free(tree);
+        return;
+    }
+    int alterou = 0;
+    tree->raiz = removeAux(tree->raiz, info, &alterou);
+}
 
 void printPosOrderX(NoArv *raiz) {
     if(raiz == NULL){

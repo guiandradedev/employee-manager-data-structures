@@ -21,24 +21,108 @@ Root* createNode(User user) {
     return node;
 }
 
-Root* insertNode(Root *root, User user,int *N) {
-    if(root == NULL) {
+// Root* insertNode(Root *root, User user,int *N) {
+//     if(root == NULL) {
+//         return createNode(user);
+//     }
+//     if(user.code < root->user.code) {
+//         root->root_left = insertNode(root->root_left, user,N);
+//     } else if(user.code > root->user.code){
+//         root->root_right = insertNode(root->root_right, user,N);
+//     }else if (user.code == root->user.code){
+//         (*N)--;
+//         return root;
+//     }
+//     return root;
+// }
+
+
+Root* rotateRight(Root* root) {
+    Root* newRoot = root->root_left;
+    root->root_left = newRoot->root_right;
+    newRoot->root_right = root;
+
+    root->bf = 0;
+    newRoot->bf = 0;
+
+    return newRoot;
+}
+
+Root* rotateLeft(Root* root) {
+    Root* newRoot = root->root_right;
+    root->root_right = newRoot->root_left;
+    newRoot->root_left = root;
+
+    root->bf = 0;
+    newRoot->bf = 0;
+
+    return newRoot;
+}
+
+Root* rotateLeftRight(Root* root) {
+    root->root_left = rotateLeft(root->root_left);
+    return rotateRight(root);
+}
+
+Root* rotateRightLeft(Root* root) {
+    root->root_right = rotateRight(root->root_right);
+    return rotateLeft(root);
+}
+
+Root* balancear(Root* noRaiz) {
+    if (noRaiz->bf < -1) {
+        if (noRaiz->root_left->bf > 0) {
+            noRaiz = rotateLeftRight(noRaiz);
+        } else {
+            noRaiz = rotateRight(noRaiz);
+        }
+    } else if (noRaiz->bf > 1) {
+        if (noRaiz->root_right->bf < 0) {
+            noRaiz = rotateRightLeft(noRaiz);
+        } else { 
+            noRaiz = rotateLeft(noRaiz);
+        }
+    }
+    return noRaiz;
+}
+
+Root* insertNode(Root* root, User user, int* alterou, int* N) {
+    if (root == NULL) {
+        *alterou = 1;
         return createNode(user);
     }
-    if(user.code < root->user.code) {
-        root->root_left = insertNode(root->root_left, user,N);
-    } else if(user.code > root->user.code){
-        root->root_right = insertNode(root->root_right, user,N);
-    }else if (user.code == root->user.code){
+
+    if (user.code < root->user.code) {
+        root->root_left = insertNode(root->root_left, user, alterou, N);
+        if (*alterou) {
+            root->bf--;
+        }
+    } else if (user.code > root->user.code) {
+        root->root_right = insertNode(root->root_right, user, alterou, N);
+
+        if (*alterou) {
+            root->bf++;
+        }
+    } else {
+        *alterou = 0;
         (*N)--;
         return root;
     }
+
+    root = balancear(root);
+
+    if (root->bf == 0) {
+        *alterou = 0;
+    }
+
     return root;
 }
 
 void insertTree(Tree *tree, User user,int *N) {
-    tree->root = insertNode(tree->root, user,N);
+    int alterou = 0;
+    tree->root = insertNode(tree->root, user,&alterou, N);
 }
+
 
 int isEmptyTree(Tree* tree) {
     return tree->root == NULL;
@@ -143,7 +227,7 @@ Root* removeAux(Root* root, int code) {
     return root;
 }
 
-User* removeFromTree(Tree *tree, int code) {
+void removeFromTree(Tree *tree, int code) {
     Root*aux = tree->root;
     if((aux->user.code == code) && (aux->root_left == NULL) && (aux->root_right == NULL)) {
         free(aux);
@@ -151,7 +235,6 @@ User* removeFromTree(Tree *tree, int code) {
         return NULL;
     }
     tree->root = removeAux(tree->root, code);
-    return &tree->root->user;
 }
 
 Root *cleanRoot(Root *root){

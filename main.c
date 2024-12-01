@@ -221,13 +221,14 @@ void findUser(Tree* tree) {
 }
 
 User* findUserByName(Tree* tree){
-    char* name = NULL;
+    char name[40];
     do
     {
         printf("Diga o nome do funcionario(maximo de 40 caracteres): ");
         scanf(" %[^\n]s",name);
+        
     } while (strlen(name) > 40);
-    
+
     return searchTreeByName(tree->root,name);
 }
 
@@ -291,9 +292,36 @@ void findUserByRole(Tree* tree) {
 }
 
 void printAllUsers(Tree *tree) {
-    header();
+    int op;
+    do
+    {
+        header();
+        printf("De qual maneira deseja imprimir a arvore?\n");
+        printf("[1]-In order\n");
+        printf("[2]-Pos order\n");
+        printf("[3]-Pre order\n");
+        printf("opcao: ");
+        scanf("%d",&op);
 
-    printInOrder(tree->root);
+        switch (op)
+        {
+            case 1:
+                printInOrder(tree->root);
+                break;
+
+            case 2:
+                printPosOrder(tree->root);
+                break;
+
+            case 3:
+                printPreOrder(tree->root);
+                break;
+        
+        default:
+            printf("opcao errada");
+            break;
+        }
+    } while (op <= 0 || op > 3);
 
     fimFuncao();
 }
@@ -436,15 +464,31 @@ void updateUser(Tree *tree) {
     if(emptyTreeMessage(tree)) return;
     printf("\n");
 
-    User* user = findUserByCode(tree);
+    int op;
+    User* user;
 
+    do
+    {
+        printf("Como deseja realizaar a busca?\n");
+        printf("[1] - Pela matricula do funcionario\n");
+        printf("[2] - Pelo nome do funcionario\n");
+        scanf("%d",&op);
+    } while (op < 1 || op > 2);
+    
+    if(op == 1){
+        user = findUserByCode(tree);
+    }else{
+        user = findUserByName(tree);
+    }
+
+    printf("Situacao da busca: ");
     if(user == NULL){
         mensagem_erro("usuario nao encontrado");
         fimFuncao();
         return;
     }
+    mensagem_sucesso("Usuario encontrado!");
 
-    int op;
     do
     {
         header();

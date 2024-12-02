@@ -379,12 +379,20 @@ void insertUser(Tree *tree, int *N){
     printf("Inserir um usuario na arvore\n");
     printf("insira a matricula\n");
     aux.code = insertCode();
-    printf("Insira o nome\n");
-    scanf(" %[^\n]s",aux.name);
+    do
+    {
+        printf("Insira o nome\n");
+        scanf(" %[^\n]s",aux.name);
+    } while (strlen(aux.name) > 40);
+    
     printf("Insira a idade\n");
     scanf("%d", &aux.age);
-    printf("Insira o salario\n");
-    scanf("%lf",&aux.salary);
+    do
+    {
+        printf("Insira o salario\n");
+        scanf("%lf",&aux.salary);
+    } while (aux.salary < 0);
+    
     printf("Insira o cargo\n");
     strcpy(aux.role, setRole());
 
@@ -402,9 +410,24 @@ void removeUser(Tree *tree, int *N) {
     
     if(emptyTreeMessage(tree)) return;
     printf("\n");
+    
+    int op;
+    User* user;
 
-    User* user = findUserByCode(tree);
-        int remove = 0;
+    do
+    {
+        printf("Como deseja realizaar a busca?\n");
+        printf("[1] - Pela matricula do funcionario\n");
+        printf("[2] - Pelo nome do funcionario\n");
+        scanf("%d",&op);
+    } while (op < 1 || op > 2);
+    
+    if(op == 1){
+        user = findUserByCode(tree);
+    }else{
+        user = findUserByName(tree);
+    }
+    int remove = 0;
 
     if(user == NULL) {
         mensagem_erro("Usuario nao encontrado!");

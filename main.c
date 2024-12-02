@@ -16,17 +16,17 @@
 
 void header();
 void menu();
-int readFile(Tree* tree); // ok
-int newFile(Tree* tree, int N); // ok
-void findUser(Tree* tree); // ok
-User* findUserByCode(Tree* tree); // ok
-void findOlderAndYounger(Tree* tree); // ok
-void findUserByRole(Tree* tree); // ok
-void printAllUsers(Tree *tree); // ok
+int readFile(Tree* tree);
+int newFile(Tree* tree, int N);
+void findUser(Tree* tree);
+User* findUserByCode(Tree* tree);
+void findOlderAndYounger(Tree* tree);
+void findUserByRole(Tree* tree);
+void printAllUsers(Tree *tree);
 
-void insertUser(Tree *tree, int *N); // ok
-void removeUser(Tree *tree, int *N); // ok
-void updateUser(Tree *tree); // not ok
+void insertUser(Tree *tree, int *N);
+void removeUser(Tree *tree, int *N);
+void updateUser(Tree *tree);
 
 int main() {
     setlocale(LC_ALL, "pt_BR.UTF-8");
@@ -49,27 +49,21 @@ int main() {
             updateUser(tree);
             break;
         case 3:
-            // remover um funcionario
             removeUser(tree, &N);
             break;
         case 4:
-            // buscar um funcionario pelo matricula
             findUser(tree);
             break;
         case 5:
-            // buscar o mais novo e o mais velho
             findOlderAndYounger(tree);
             break;
         case 6:
-            // buscar todos por cargo
             findUserByRole(tree);
             break;
         case 7:
-            // imprimir todos
             printAllUsers(tree);
             break;
         case 8:
-            // fim do matricula
             break;
         default:
             mensagem_erro("Comando incorreto.");
@@ -118,20 +112,20 @@ int readFile(Tree* tree){
         exit(0);
     }
     fscanf(ARQ, "%d\n", &N);
-    // printf("Quantidade de usuarios a serem cadastrados: %d\n", N);
+
 
     User aux;
     char line[200];
     for (int i = 0; i < N; i++) {
-        // flushStdin();
+
         if (fgets(line, sizeof(line), ARQ) != NULL) {
-            // Le até encontrar um número
+
             line[strcspn(line, "\n")] = '\0';
 
             sscanf(line, "%d", &aux.code);
 
             int index = 0;
-            
+
             while(line[index] != ' ') index++;
             index++;
 
@@ -139,7 +133,7 @@ int readFile(Tree* tree){
 
             while (line[index] == ' '){
                 index++;
-            }   
+            }
 
             sscanf(&line[index],"%d", &aux.age);
 
@@ -150,9 +144,9 @@ int readFile(Tree* tree){
 
             while (line[index] == ' '){
                 index++;
-            } 
+            }
             sscanf(&line[index], "%lf\n", &aux.salary);
-            // le como longfloat pra evitar bug da leitura da virgula
+
 
             insertTree(tree, aux,&N);
         }
@@ -200,7 +194,7 @@ void findUser(Tree* tree) {
         printf("[2] - Pelo nome do funcionario\n");
         scanf("%d",&op);
     } while (op < 1 || op > 2);
-    
+
     if(op == 1){
         user = findUserByCode(tree);
     }else{
@@ -226,7 +220,7 @@ User* findUserByName(Tree* tree){
     {
         printf("Diga o nome do funcionario(maximo de 40 caracteres): ");
         scanf(" %[^\n]s",name);
-        
+
     } while (strlen(name) > 40);
 
     return searchTreeByName(tree->root,name);
@@ -316,7 +310,7 @@ void printAllUsers(Tree *tree) {
             case 3:
                 printPreOrder(tree->root);
                 break;
-        
+
         default:
             printf("opcao errada");
             break;
@@ -339,7 +333,7 @@ char* setRole(){
         printf("Escolha: ");
         scanf("%d",&op);
         switch (op){
-    
+
         case 1:
             return "ANALISTA DE SISTEMAS";
             break;
@@ -371,7 +365,7 @@ char* setRole(){
     } while (op<1 || op>6);
 
     return NULL;
-}    
+}
 
 void insertUser(Tree *tree, int *N){
     User aux;
@@ -384,7 +378,7 @@ void insertUser(Tree *tree, int *N){
         printf("Insira o nome\n");
         scanf(" %[^\n]s",aux.name);
     } while (strlen(aux.name) > 40);
-    
+
     printf("Insira a idade\n");
     scanf("%d", &aux.age);
     do
@@ -392,7 +386,7 @@ void insertUser(Tree *tree, int *N){
         printf("Insira o salario\n");
         scanf("%lf",&aux.salary);
     } while (aux.salary < 0);
-    
+
     printf("Insira o cargo\n");
     strcpy(aux.role, setRole());
 
@@ -407,10 +401,10 @@ void insertUser(Tree *tree, int *N){
 void removeUser(Tree *tree, int *N) {
     header();
     printf("Remover um usuario da arvore\n");
-    
+
     if(emptyTreeMessage(tree)) return;
     printf("\n");
-    
+
     int op;
     User* user;
 
@@ -421,7 +415,7 @@ void removeUser(Tree *tree, int *N) {
         printf("[2] - Pelo nome do funcionario\n");
         scanf("%d",&op);
     } while (op < 1 || op > 2);
-    
+
     if(op == 1){
         user = findUserByCode(tree);
     }else{
@@ -477,13 +471,13 @@ void updateSalary(User* user){
     {
         scanf("%lf", &user->salary);
     } while (user->salary < 0);
-    mensagem_sucesso("Salario atualizado!");   
+    mensagem_sucesso("Salario atualizado!");
 }
 
 void updateUser(Tree *tree) {
     header();
     printf("Atualizar um usuario da arvore\n");
-    
+
     if(emptyTreeMessage(tree)) return;
     printf("\n");
 
@@ -497,7 +491,7 @@ void updateUser(Tree *tree) {
         printf("[2] - Pelo nome do funcionario\n");
         scanf("%d",&op);
     } while (op < 1 || op > 2);
-    
+
     if(op == 1){
         user = findUserByCode(tree);
     }else{
@@ -525,7 +519,7 @@ void updateUser(Tree *tree) {
         printf("[5]-Nao desejo atualizar mais\n");
         printf("opcao:");
         scanf("%d",&op);
-    
+
         switch (op){
         case 1:
             updateName(user);
@@ -547,7 +541,7 @@ void updateUser(Tree *tree) {
             fimFuncao();
             return;
             break;
-        
+
         default:
             mensagem_erro("Opcao invalida");
             break;

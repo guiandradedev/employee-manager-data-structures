@@ -29,4 +29,3 @@
 1950 Thiago Ribeiro                         64 ANALISTA DE SUPORTE     2348.00
 2136 Helena Moreira                         32 PROGRAMADOR             3375.00
 2014 Daniel Pereira                         63 ANALISTA DE SUPORTE     2392.00
-1000 Luigi                                  21 ANALISTA DE SISTEMAS    300.00
